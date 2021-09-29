@@ -1,13 +1,13 @@
+import React from 'react'
 import Sidebar from 'componentes/Sidebar'
-import React, { Children } from 'react'
 
-const PrivateLayout = ({children}) => {
+const PrivateLayout = ({ children }) => {
     return (
-        <div>
+        <div className='flex w-screen h-screen'>
           <Sidebar/>
-          {children} 
+          <main className='flex w-full bg-blue-400 overflow-y-scroll'>{children}</main>
         </div>
-    )
-}
+    );
+};
 
 export default PrivateLayout

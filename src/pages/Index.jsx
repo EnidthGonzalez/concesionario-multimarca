@@ -1,11 +1,7 @@
 import React from 'react'
 
 const Index = () => {
-    return (
-        <div>
-               Contenido landing concesionario 
-        </div>
-    )
+    return <div>Contenido landing concesionario </div>
 }
 
 export default Index
