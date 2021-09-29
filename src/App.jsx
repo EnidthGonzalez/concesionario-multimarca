@@ -1,6 +1,9 @@
+import AuthLayout from 'layouts/AuthLayout';
 import PrivateLayout from 'layouts/PrivateLayout';
 import PublicLayout from 'layouts/PublicLayout';
-import Admin from 'pages/Admin';
+import Admin from 'pages/admin/Index';
+import Clientes from 'pages/admin/Clientes';
+import Vehiculos from 'pages/admin/Vehiculos';
 import Index from 'pages/Index';
 import Login from 'pages/Login';
 import Registro from 'pages/Registro';
@@ -11,31 +14,52 @@ import 'styles/styles.css'
 function App() {
   return (
     <Router>
-      {/* Permite q el navegador sea capaz de coger una sola ruta de todas las que hay  */}
-    <Switch>
-      <Route path= '/login'>
-        <Login/>
-      </Route>
+      <switch>
+        {/* creo las rutas de los layaut q tenemos */}
+        <Route path={['/admin','/admin/vehiculos','/admin/clientes']}>
+          <PrivateLayout> 
+            <Switch>
+              <Route path='/admin/vehiculos'>
+                <Vehiculos/>
+              </Route>
+              <Route path='/admin/clientes'>
+                <Clientes/>
+              </Route>
 
-      <Route path= '/registro'>
-        <Registro/>
-      </Route>
+              <Route path='/admin'>
+                <Admin/>
+              </Route>
+            </Switch>
+          </PrivateLayout>
+        </Route>
 
-      <Route path= '/admin'>
-        <PrivateLayout>
-          <Admin/>
-        </PrivateLayout>
-      </Route>
-      
-      {/* siempre se pone de ultima la ruta base */}
-      <Route path= '/'>
+        <Route path={['/login','/registro']}>
+          <AuthLayout>
+            <Switch>
+              <Route path='/login'>
+                <Login/>
+              </Route>
+              <Route path='/registro'>
+                <Registro/>
+              </Route>
+            </Switch>
+          </AuthLayout>
+        </Route>
+
+        <Route path={['/*']}>
         <PublicLayout>
-           <Index/>
-        </PublicLayout>
-      </Route>
+          <Switch>
+            <Route path='/'>
+              <Index/>
+            </Route>
+          </Switch>
 
-    </Switch>
-    </Router >
+        </PublicLayout>
+        </Route>
+
+      </switch>
+  </Router>
+
 
   )
 }
