@@ -1,59 +1,56 @@
 import React, { useEffect, useState } from 'react';
 
+//realizar un formulario que le pida al usuario 
+
 const Vehiculos = () => {
-   // ponemos las interactividades que tiene la pagina
-   // 2.manejar estdos useState
-   const [nombreVehiculo, setNombreVehiculo]= useState("");//acas se escribe algo para el valor predefinido
-    useEffect(() =>{
-       //ejecutaamos una secuncia de pasos y esa seguencia de pasos se va a ejecutar
-       // cada vez que se pongan las variables en los[], si se deja vacio se ejecutara una sola vez
-        console.log('Hola soy un useEffect que se ejecuta solo una vez cuando la pagina se renderiza, porque tiene el array de dependencias vacio');
-       //paso2
-       //paso3
-       //...
-    },[]);
- 
-    //otra forma:
-    useEffect(() => {
-        console.log("Esto es una variable que se ejecuta cada que cambia ael valor de nombre vehiculo")
-        console.log("El valor de la variable es ", nombreVehiculo);
-    },[nombreVehiculo]);
+    const [edad,setEdad] = useState(0);
 
-    const cambioDeMarca=(e)=>{
-        console.log('Marca:', e.target.Value);
-    }
+    const [esMenorDeEdad, setEsMenorDeEdad]= useState(false);
+    const [mostrarCamposAdicionales, setMostrarCamposAdicionales]= useState(false);
 
-    const enviarDatosAlBackend = () =>{
-        console.log("El valor de la variable nombreVehiculo es: ", nombreVehiculo)
-    };
+    useEffect(()=>{
+        if(edad >= 18){
+            setEsMenorDeEdad(false);
+        }
+        else{
+            setEsMenorDeEdad(true);
+        }
+    },[edad])
 
     return (
    /* Hay 2 formas de manejar la reactividad (huts)=> son funciones */
    <from className='flex flex-col '>
        <h2>Formulario de Creacion de Vehiculos:</h2>
-       {/* onchange= permite que cada vez eue el input cambie se pueda ejecutar una funcion y hay 2 formas:*/}
-       {/*     <input 
-        onchange={(e) => {
-            console.log(e.target.Value);
+       <label htmlFor='edad'>
+           Por favor ingrese su edad
+           <input 
+            value={edad} onChange={(e)=>
+            {setEdad(e.target.value);
             }} 
-            type="text" 
-            placeholder='Nombre del Vehiculo' 
-            /> */}
-        <input 
-          onChange={(e) => {
-            //necesito guardarlos en una variable
-                setNombreVehiculo(e.target.Value);
-            }} 
-            value ={nombreVehiculo} //valor predefinido
-            type="text" 
-            placeholder='Nombre del Vehiculo' 
+            className='border border-gray-600' 
+            name= 'edad' 
+            type='number'
             />
-       <input onchage= {cambioDeMarca} type="text" placeholder='marca del vehiculo'/>
-
-       <input type="text" placeholder='modelo'/>
-       <button type='button' onClick={enviarDatosAlBackend} className='bg-indigo-500 text-white'>Enviar Datos</button>
+       </label>
+       {esMenorDeEdad ? ( 
+          <span className='text-3xl text-red-500'>
+             !USTED ES MENOR DE EDAD, no puede hacer pagos¡
+          </span>
+          ):(
+          <span className='text-3xl text-green-500'>
+              !USTED ES MAYOR DE EDAD, SI puede hacer pagos¡
+          </span>
+        )}  
+        <button onClick={()=> setMostrarCamposAdicionales(!mostrarCamposAdicionales)} type='button'  className='text-white bg-indigo-500'>Mostrar Campos Adicionales</button>  
+        {mostrarCamposAdicionales &&
+        <div>
+            <input className='border bg-gray-400 my-2 p-3' placeholder='dato nuevo' type='text' />
+            <input  className='border bg-gray-400 my-2 p-3' placeholder='dato nuevo' type='text' />
+            <input className='border bg-gray-400 my-2 p-3' placeholder='dato nuevo'  type='text' />
+            <input className='border bg-gray-400 my-2 p-3' placeholder='dato nuevo' type='text' />
+        </div>}   
    </from>
-    )
-}
+    );
+};
 
 export default Vehiculos
